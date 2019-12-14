@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.gms.ads.AdRequest
@@ -18,7 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.ironsight.codelab.R
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     // Access a Cloud Firestore instance from your Activity
     private val db = FirebaseFirestore.getInstance()
@@ -33,6 +32,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mbLogOut.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            Toast.makeText(this, "Log out", Toast.LENGTH_SHORT).show()
+        }
 
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713")
@@ -68,7 +72,6 @@ class MainActivity : AppCompatActivity() {
 
                 // Log and toast
                 Log.d("notification token", token!!)
-                Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
             })
 
         //upload data

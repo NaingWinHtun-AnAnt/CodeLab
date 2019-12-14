@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "27901692945",
+    "firebase_url": "https://codelab-32809.firebaseio.com",
+    "project_id": "codelab-32809",
+    "storage_bucket": "codelab-32809.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27901692945:android:ddfa1e64976c199985b5b0",
+        "android_client_info": {
+          "package_name": "com.ironsight.codelab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27901692945-s0mv2gmutn331vl3phkg31ktv8vpdarl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeGaYWhLGMQiFzEuuqLqmXxni_SXB3K_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27901692945-s0mv2gmutn331vl3phkg31ktv8vpdarl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

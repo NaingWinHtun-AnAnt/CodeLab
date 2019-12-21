@@ -3,4 +3,5 @@
     <string name="text_login">Split the bill in Seconds</string>
     <string name="text_login_with_facebook">Login with Facebook</string>
     <string name="text_login_with_google">Login with Google</string>
+    <string name="text_logout">Logout</string>
 </resources>

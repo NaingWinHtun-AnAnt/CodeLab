@@ -1,9 +1,9 @@
 package com.ironsight.codelab.activities
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -17,9 +17,12 @@ import com.bumptech.glide.Glide
 import com.ironsight.codelab.R
 import kotlinx.android.synthetic.main.activity_image_download.*
 import java.io.File
-import java.io.FileOutputStream
 
 class ImageDownloadActivity : AppCompatActivity() {
+
+    companion object {
+        private const val DIR_NAME = "CodeLabImages"
+    }
 
     @SuppressLint("SdCardPath")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,26 +76,31 @@ class ImageDownloadActivity : AppCompatActivity() {
     }
 
     private fun saveImageToStorage() {
-        val externalStorageState = Environment.getExternalStorageState()
-        if (externalStorageState == Environment.MEDIA_MOUNTED) {
-            val storageDirectory = Environment.getExternalStorageDirectory().toString()
-            val file = File(storageDirectory, "image.jpg")
-            try {
-                val stream = FileOutputStream(file)
-                val drawable = ContextCompat.getDrawable(this, R.drawable.dog_muzzle_shepherd_eyes)
-                val bitMap = (drawable as BitmapDrawable).bitmap
-                bitMap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-                stream.flush()
-                stream.close()
-                Toast.makeText(
-                    this,
-                    "Image save successfully. ${Uri.parse(file.absolutePath)}",
-                    Toast.LENGTH_LONG
-                ).show()
-                Log.d("naingwinhtun", Uri.parse(file.absolutePath).toString())
-            } catch (e: Exception) {
-                Log.d("naingwinhtun", e.toString())
-            }
+        val filename = "filename.jpg"
+        val downloadUrlOfImage =
+            "https://images.wallpaperscraft.com/image/lens_hand_optics_158012_300x168.jpg"
+        val direct = File(
+            this.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!.absolutePath + "/" + DIR_NAME + "/"
+        )
+
+        if (!direct.exists()) {
+            direct.mkdir()
+            Log.d("create", "dir created for first time")
         }
+
+        val dm = this.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val downloadUri = Uri.parse(downloadUrlOfImage)
+        val request = DownloadManager.Request(downloadUri)
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+            .setAllowedOverRoaming(false)
+            .setTitle(filename)
+            .setMimeType("image/jpg")
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_PICTURES,
+                File.separator + DIR_NAME + File.separator + filename
+            )
+
+        dm.enqueue(request)
     }
 }
